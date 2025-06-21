@@ -345,6 +345,7 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({ media
     const [selectedItem, setSelectedItem] = useState<MediaItemType | null>(null);
     const [items, setItems] = useState(mediaItems);
     const [isDragging, setIsDragging] = useState(false);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-5xl">
@@ -412,7 +413,7 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({ media
                                     }
                                 }}
                                 whileHover={{ scale: 1.02 }}
-                                drag
+                                drag={!isMobile}
                                 dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
                                 dragElastic={1}
                                 onDragStart={() => setIsDragging(true)}

@@ -1,5 +1,6 @@
 "use client"
 import { motion, Easing, Variants } from "framer-motion";
+import Link from "next/link";
 
 // Animation variants for reusability
 const containerVariants: Variants = {
@@ -61,10 +62,16 @@ const backgroundVariants: Variants = {
 // Footer data for better maintainability
 const footerData = {
   sections: [
-    { title: "About", links: ["Home", "Projects", "Our Mission", "Contact Us"] },
-    { title: "Education", links: ["News", "Learn", "Certification", "Publications"] },
-    { title: "Services", links: ["Web Design", "Development", "Consulting", "Support"] },
-    { title: "Resources", links: ["Blog", "Documentation", "Community", "Help Center"] },
+    {
+      title: "Company",
+      links: [
+        { label: "Terms & Conditions", href: "/terms-and-conditions" },
+        { label: "Refund Policy", href: "/refund-policy" },
+        { label: "About Us", href: "/about-us" },
+        { label: "Privacy Policy", href: "/privacy-policy" },
+        { label: "Contact Us", href: "/contact-us" },
+      ],
+    },
   ],
   social: [
     { href: "#", label: "Twitter", icon: "T" },
@@ -77,7 +84,15 @@ const footerData = {
 }
 
 // Reusable components
-const NavSection = ({ title, links, index }: { title: string; links: string[]; index: number }) => (
+const NavSection = ({
+  title,
+  links,
+  index,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+  index: number;
+}) => (
   <motion.div variants={itemVariants} custom={index} className="flex flex-col gap-2">
     <motion.h3
       initial={{ opacity: 0, y: -10 }}
@@ -88,27 +103,27 @@ const NavSection = ({ title, links, index }: { title: string; links: string[]; i
       {title}
     </motion.h3>
     {links.map((link, linkIndex) => (
-      <motion.a
-        key={linkIndex}
-        variants={linkVariants}
-        custom={linkIndex}
-        href="#"
-        whileHover={{
-          x: 8,
-          transition: { type: "spring", stiffness: 300, damping: 20 },
-        }}
-        className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-sans text-xs md:text-sm group relative"
-      >
-        <span className="relative">
-          {link}
-          <motion.span
-            className="absolute bottom-0 left-0 h-0.5 bg-primary"
-            initial={{ width: 0 }}
-            whileHover={{ width: "100%" }}
-            transition={{ duration: 0.3 }}
-          />
-        </span>
-      </motion.a>
+      <Link key={link.label} href={link.href} passHref legacyBehavior>
+        <motion.a
+          variants={linkVariants}
+          custom={linkIndex}
+          whileHover={{
+            x: 8,
+            transition: { type: "spring", stiffness: 300, damping: 20 },
+          }}
+          className="text-muted-foreground hover:text-foreground transition-colors duration-300 font-sans text-xs md:text-sm group relative"
+        >
+          <span className="relative">
+            {link.label}
+            <motion.span
+              className="absolute bottom-0 left-0 h-0.5 bg-primary"
+              initial={{ width: 0 }}
+              whileHover={{ width: "100%" }}
+              transition={{ duration: 0.3 }}
+            />
+          </span>
+        </motion.a>
+      </Link>
     ))}
   </motion.div>
 )

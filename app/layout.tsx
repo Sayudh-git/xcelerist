@@ -1,14 +1,10 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Geist } from "next/font/google";
 import "./globals.css";
 import { StagewiseToolbar } from "@stagewise/toolbar-next";
 import { ReactPlugin } from "@stagewise-plugins/react";
-
-const geistSans = Geist({
-  subsets: ["latin"],
-});
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "PureLanding - Beautiful Shadcn UI Landing Page",
@@ -102,7 +98,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={cn("font-sans antialiased")}>
         <StagewiseToolbar config={{ plugins: [ReactPlugin] }} />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider>{children}</TooltipProvider>
